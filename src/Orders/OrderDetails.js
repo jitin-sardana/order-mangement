@@ -49,7 +49,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
         const totalAmount = `%0ATotal = ${calculation?.totalAmount}%0A`;
         const discountedAmount = discount ? `%0ADiscount = ${discount}%0A` : `%0A`;
         const totalAfterDiscount = discount ? `Total = ${calculation?.totalAfterDiscount}%0A` : `%0A`;
-        const gst = `GST = 5% %0A`;
+        const gst = `State GST = 9% %0ACentral GST = 9% %0A`;
         const totalAmountToBePaid = `Total Amount to be Paid = ${calculation?.totalAmountToBePaid}%0A%0A`;
         const thanks = 'Thanks for choosing us %0A Take Care'
 
@@ -100,8 +100,10 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
             <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Taxable Total</strong></td>
                 <td colSpan='2' style={{ textAlign: 'Left' }}><strong>{calculation?.totalAfterDiscount}</strong></td></tr>
 
-            <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>GST</strong></td>
-                <td colSpan='2' style={{ textAlign: 'Left' }}><strong>5%</strong></td></tr>
+            <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>State Tax</strong></td>
+                <td colSpan='2' style={{ textAlign: 'Left' }}><strong>9%</strong></td></tr>
+                <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Central Tax</strong></td>
+                <td colSpan='2' style={{ textAlign: 'Left' }}><strong>9%</strong></td></tr>
 
             <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Total</strong></td>
                 <td colSpan='2' style={{ textAlign: 'Left' }}><strong>{calculation?.totalAmountToBePaid}</strong></td></tr>

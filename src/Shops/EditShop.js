@@ -70,6 +70,7 @@ const EditShop = ({ isOpen, clientName, clientPhoneNo, clientAddress, id, cityId
                         id="clientPhoneNo"
                         name="clientPhoneNo"
                         label="Client Phone No"
+                        inputProps={{ type: 'tel', inputmode: "decimal"}}
                         type="text"
                         defaultValue={clientPhoneNo}
                         fullWidth

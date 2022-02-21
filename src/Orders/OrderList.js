@@ -100,7 +100,7 @@ const OrderList = () => {
                                 <td>{orderItem.clientPhoneNo}</td>
                                 <td>{orderItem.products.map((product) => (<p key={product.id}>{product.productName}({product.productPrice}*{product.quantity}/{product.unit} = {product.total})</p>))}</td>
                                 <td>{orderItem.discount}</td>
-                                <td>5%</td>
+                                <td>18%</td>
                                 <td>{orderItem.totalAmountToBePaid}</td>
                                 <td><Button variant="contained" onClick={() => viewBill(orderItem)}>
                     View Bill

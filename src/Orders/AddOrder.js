@@ -136,7 +136,8 @@ const AddOrder = () => {
                         margin="normal"
                         InputProps={{
                             inputProps: {
-                                min: 1
+                                min: 1,
+                                inputmode: "decimal"
                             }
                         }}
                         inputRef={quantityReference}

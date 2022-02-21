@@ -103,7 +103,7 @@ const AddNewShop = ({ cityName, docId }) => {
                             id="clientPhoneNo"
                             name="clientPhoneNo"
                             label="Client Phone No"
-                            type="tel"
+                            inputProps={{ type: 'tel', inputmode: "decimal"}}
                             fullWidth
                             pattern="^\d{3}-\d{3}-\d{4}$"
                             required="required"

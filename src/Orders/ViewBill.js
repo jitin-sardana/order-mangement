@@ -88,7 +88,7 @@ const ViewBill = () => {
                                         <tr>
                                             <td style={{ fontSize: '13px', color: '#000', padding: '5px', fontFamily: 'Muli sans-serif' }} >GSTIN : 03ALNPK2641M1ZZ</td>
                                         </tr>
-                                       {/*  <tr>
+                                        {/*  <tr>
                                             <td style={{ fontSize: '13px', color: '#000', padding: '5px', fontFamily: 'Muli sans-serif' }}>Pan No : AA444111FFFF</td>
                                         </tr> */}
                                         <tr>
@@ -154,12 +154,12 @@ const ViewBill = () => {
                                                     </tr>))}
                                                     {
                                                         billDetails.discount > 0 && <tr style={{ fontSize: '13px', color: '#000', padding: '5px', fontFamily: 'Muli sans-serif' }}>
-                                                        <td height="30" align="right" colspan={4}><strong>Discount(&#8377;)&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
-                                                        <td align="center">{billDetails.discount}</td>
-                                                    </tr>
+                                                            <td height="30" align="right" colspan={4}><strong>Discount(&#8377;)&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+                                                            <td align="center">{billDetails.discount}</td>
+                                                        </tr>
                                                     }
-                                                   <tr style={{ fontSize: '13px', color: '#000', padding: '5px', fontFamily: 'Muli sans-serif' }}>
-                                                        <td height="30" align="right" colspan={4}><strong>TOTAL&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+                                                    <tr style={{ fontSize: '13px', color: '#000', padding: '5px', fontFamily: 'Muli sans-serif' }}>
+                                                        <td height="30" align="right" colspan={4}><strong>Taxable Total&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
                                                         <td align="center">{billDetails.totalAfterDiscount}</td>
                                                     </tr>
                                                 </tbody>
@@ -172,9 +172,12 @@ const ViewBill = () => {
                                             <td><table width="100%" border="1" cellpadding="0" cellspacing="0" class="tb2">
                                                 <tbody>
                                                     <tr style={{ fontSize: '13px', color: '#000', padding: '5px', fontFamily: 'Muli sans-serif' }}>
-                                                        
-                                                    <td height="30" align="right" colspan={4}>&nbsp;<strong>GST</strong>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                        <td width="13%" align="center">5%&nbsp;</td>
+                                                        <td height="30" align="right" colspan={4}>&nbsp;<strong>State Tax</strong>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                        <td width="13%" align="center">9%&nbsp;</td>
+                                                    </tr>
+                                                    <tr style={{ fontSize: '13px', color: '#000', padding: '5px', fontFamily: 'Muli sans-serif' }}>
+                                                        <td height="30" align="right" colspan={4}>&nbsp;<strong>Central Tax</strong>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                        <td width="13%" align="center">9%&nbsp;</td>
                                                     </tr>
                                                     <tr style={{ fontSize: '13px', color: '#000', padding: '5px', fontFamily: 'Muli sans-serif' }}>
                                                         <td height="30" align="right" colspan={4}><strong>Grand Total&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
