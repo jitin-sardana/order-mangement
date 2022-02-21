@@ -109,7 +109,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
         </div>
         </Grid>
         <Grid item xs={4} sm={4} >
-            <a target='_blank' rel="noreferrer" href={`https://api.whatsapp.com/send/?phone=91${selectedClient?.clientPhoneNo}?text=${getMessageDetails()}`} style={{ fontSize: '15px', color: '#3f51b5', textDecoration: 'none' }}><i className="fa fa-whatsapp"></i> Send Watsapp</a>
+            <a target='_blank' rel="noreferrer" href={`https://api.whatsapp.com/send/?phone=91${selectedClient?.clientPhoneNo}&text=${getMessageDetails()}`} style={{ fontSize: '15px', color: '#3f51b5', textDecoration: 'none' }}><i className="fa fa-whatsapp"></i> Send Watsapp</a>
         </Grid>
         <Grid item xs={4} sm={4} >
             <a target='_blank' rel="noreferrer" href={`sms:+91${selectedClient?.clientPhoneNo};?&body=${getMessageDetails()}`} style={{ fontSize: '15px', color: '#3f51b5', textDecoration: 'none' }}><i className="fa fa-envelope"></i> Sms </a>
