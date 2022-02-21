@@ -143,7 +143,7 @@ const AddOrder = () => {
                         inputRef={quantityReference}
                         onBlur={updateQuantity}
                     />
-                    <Button variant="contained" color="primary" onClick={aggregateOrder}>
+                    <Button variant="contained" disabled={!selectedProduct} color="primary" onClick={aggregateOrder}>
                         Add to order
                     </Button>
                 </FormControl>

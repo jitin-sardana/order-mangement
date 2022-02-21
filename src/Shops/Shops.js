@@ -60,9 +60,7 @@ const Shops = () => {
                 Back
             </Button>
         </Grid>{user && selectedCity?.cityName && <>
-           
-                <AddNewShop cityName={selectedCity?.cityName} docId={selectedCity?.docId} />
-            
+            <AddNewShop cityName={selectedCity?.cityName} docId={selectedCity?.docId} />
             <Grid item xs={12}>
                 <Typography variant="h6" className={classes.title}>
                     Clients in <strong>{selectedCity?.cityName.toUpperCase()}</strong>

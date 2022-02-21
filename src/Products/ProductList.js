@@ -80,7 +80,7 @@ const ProductList = () => {
             </Button>
         </Grid>
         <Grid item xs={6} sm={6} md={6} lg={6}>
-            <Button variant="outlined" className={classes.addProduct} startIcon={<AddCircleOutlined />} onClick={() => setAddNewProduct(true)}>
+            <Button variant="s" className={classes.addProduct} startIcon={<AddCircleOutlined />} onClick={() => setAddNewProduct(true)}>
                 Add Product
             </Button>
         </Grid>

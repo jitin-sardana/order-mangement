@@ -4,7 +4,7 @@ import { Paper, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Loading from '../assets/loading.gif';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,7 @@ const CityList = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [locations, setLocations] = useState(null);
-    const { loading } = useSelector(state => state.orderManagement);
+    //const { loading } = useSelector(state => state.orderManagement);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const CityList = () => {
             </Grid>
         </React.Fragment>
         )) : <Grid item xs={6} sm={6}>
-            {loading ? <img src={Loading} alt='loading data' /> : `Currently there is no city`}
+            <img src={Loading} alt='loading data' /> 
         </Grid>}
 
     </>);
