@@ -94,7 +94,7 @@ const EditShop = ({ isOpen, clientName, clientPhoneNo, clientAddress, id, cityId
                         Cancel
                     </Button>
                     <Button variant="contained" color="primary" onClick={updateClient}>
-                        Update {clientName}
+                        Update
                     </Button>
                 </DialogActions>
                 </form>

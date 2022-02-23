@@ -125,7 +125,7 @@ const AddNewShop = ({ cityName, docId }) => {
                             Cancel
                         </Button>
                         <Button variant="contained" color="primary" onClick={addNewClient}>
-                            Add Client in {cityName}
+                            Add New Client
                         </Button>
                     </DialogActions>
                 </form>

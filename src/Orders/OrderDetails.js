@@ -82,11 +82,11 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
         const totalAmount = `%0ATotal = ${calculation?.totalAmount}%0A`;
         const discountedAmount = discount ? `%0ADiscount = ${discount}%0A` : `%0A`;
         const totalAfterDiscount = discount ? `Total = ${calculation?.totalAfterDiscount}%0A` : `%0A`;
-        const gst = `State GST = 9% %0ACentral GST = 9% %0A`;
+        //const gst = `State GST = 9% %0ACentral GST = 9% %0A`;
         const totalAmountToBePaid = `Total Amount to be Paid = ${calculation?.totalAmountToBePaid}%0A%0A`;
-        const thanks = 'Thanks for choosing us %0A Take Care'
+        const thanks = 'Thanks for choosing us %0ATake Care'
 
-        return `${greetings}${orderDetails}${totalAmount}${discountedAmount}${totalAfterDiscount}${gst}${totalAmountToBePaid}${thanks}`;
+        return `${greetings}${orderDetails}${totalAmount}${discountedAmount}${totalAfterDiscount}${totalAmountToBePaid}${thanks}`;
 
     }
     const placeOrder = () => {
@@ -99,7 +99,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
 
     return (<><Grid container xs={12} sm={12} md={8} lg={8} >
         <Grid item xs={12} sm={12} >
-            <Typography variant="h6">Aggregate Bill</Typography><br />
+            <Typography variant="h6" style={{marginLeft:'15px'}}>Aggregate Bill</Typography><br />
             <div className="myWebApp">
                 <table>
                     <tr>
@@ -130,14 +130,14 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
                     <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Discount(&#8377;)</strong></td>
                         <td colSpan='2' style={{ textAlign: 'Left' }}><input type='text' name='discount' autoComplete='off' style={{ width: '50px' }} defaultvalue={discount} onChange={addDiscount} /></td></tr>
 
-                    <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Taxable Total</strong></td>
+                    {/* <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Taxable Total</strong></td>
                         <td colSpan='2' style={{ textAlign: 'Left' }}><strong>{calculation?.totalAfterDiscount}</strong></td></tr>
-
-                    <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>State Tax</strong></td>
+ */}
+                    {/* <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>State Tax</strong></td>
                         <td colSpan='2' style={{ textAlign: 'Left' }}><strong>9%</strong></td></tr>
                     <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Central Tax</strong></td>
                         <td colSpan='2' style={{ textAlign: 'Left' }}><strong>9%</strong></td></tr>
-
+ */}
                     <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Total</strong></td>
                         <td colSpan='2' style={{ textAlign: 'Left' }}><strong>{calculation?.totalAmountToBePaid}</strong></td></tr>
                 </table>

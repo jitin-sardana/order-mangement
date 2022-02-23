@@ -84,7 +84,7 @@ const ProductList = () => {
                 Add Product
             </Button>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
             {products?.length > 0 ? <div className="myWebApp"><table>
                 <tr>
                     <th></th>

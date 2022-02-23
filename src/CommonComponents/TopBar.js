@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useAuthState } from "react-firebase-hooks/auth";
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Grid, Toolbar, Typography, Button, IconButton, Menu, MenuItem, Fade } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { logout } from "../firebase";
+import { logout, auth } from "../firebase";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -48,7 +49,9 @@ export default function TopBar() {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
-    const { authenticatedUser } = useSelector(state => state.orderManagement);
+    const [user] = useAuthState(auth);
+    //console.log('ted   d  ',user.displayName);
+    //const { authenticatedUser } = useSelector(state => state.orderManagement);
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -76,11 +79,11 @@ export default function TopBar() {
                     <Typography variant="h6" className={classes.title}>
                         HC Agency
                     </Typography>
-                    {authenticatedUser?.displayName && <><Typography className={classes.hiddenXs}>Welcome, {authenticatedUser.displayName} </Typography> <Button className={classes.hiddenXs} color="inherit" onClick={() => logout(dispatch)}>
+                    {user?.displayName && <><Typography className={classes.hiddenXs}>Welcome, {user.displayName} </Typography> <Button className={classes.hiddenXs} color="inherit" onClick={() => logout(dispatch)}>
                         Logout
                     </Button></>}
                 </Toolbar>
-                {authenticatedUser?.displayName && <><Menu
+                {user?.displayName && <><Menu
                     id="fade-menu"
                     anchorEl={anchorEl}
                     keepMounted
@@ -88,11 +91,11 @@ export default function TopBar() {
                     onClose={handleClose}
                     TransitionComponent={Fade}
                 >
-                    {authenticatedUser?.displayName && <MenuItem className={classes.visibleXs}><Typography>Welcome, {authenticatedUser.displayName} </Typography></MenuItem>}
+                    {user?.displayName && <MenuItem className={classes.visibleXs}><Typography>Welcome, {user.displayName} </Typography></MenuItem>}
                     <MenuItem onClick={() => handleRedirect('/dashboard')}>Home</MenuItem>
                     <MenuItem onClick={() => handleRedirect('/products')}>Products</MenuItem>
                     <MenuItem onClick={() => handleRedirect('/orders')}>Orders</MenuItem>
-                    {authenticatedUser?.displayName && <MenuItem className={classes.visibleXs}><Button onClick={() => logout(dispatch)}>
+                    {user?.displayName && <MenuItem className={classes.visibleXs}><Button onClick={() => logout(dispatch)}>
                         Logout
                     </Button></MenuItem> }
                 </Menu>
