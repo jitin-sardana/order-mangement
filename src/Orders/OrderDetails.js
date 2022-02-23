@@ -79,12 +79,12 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
         for (let i = 0; i < orderItems.length; i++) {
             orderDetails += `${orderItems[i].productName}(${orderItems[i].productPrice}*${orderItems[i].quantity}${orderItems[i].unit})=${orderItems[i].total}%0A`
         }
-        const totalAmount = `%0ATotal = ${calculation?.totalAmount}%0A`;
-        const discountedAmount = discount ? `%0ADiscount = ${discount}%0A` : `%0A`;
-        const totalAfterDiscount = discount ? `Total = ${calculation?.totalAfterDiscount}%0A` : `%0A`;
+        const totalAmount = discount ? `%0ATotal = &#8377; ${calculation?.totalAmount}%0A` :``;
+        const discountedAmount = discount ? `%0ADiscount = &#8377; ${discount}%0A` : `%0A`;
+        const totalAfterDiscount = discount ? `Total = &#8377; ${calculation?.totalAfterDiscount}%0A` : ``;
         //const gst = `State GST = 9% %0ACentral GST = 9% %0A`;
-        const totalAmountToBePaid = `Total Amount to be Paid = ${calculation?.totalAmountToBePaid}%0A%0A`;
-        const thanks = 'Thanks for choosing us %0ATake Care'
+        const totalAmountToBePaid = `Total Amount to be Paid = &#8377; ${calculation?.totalAmountToBePaid}%0A%0A`;
+        const thanks = 'Thanks for placing order with us.%0ATake Care'
 
         return `${greetings}${orderDetails}${totalAmount}${discountedAmount}${totalAfterDiscount}${totalAmountToBePaid}${thanks}`;
 
