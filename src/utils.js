@@ -20,7 +20,7 @@ export const getCalculation = (items, discount) => {
     return {
         totalAmount: getTotalWithoutGst(items),
         totalAfterDiscount: totalAfterDiscount,
-        totalAmountToBePaid: totalAfterDiscount.toFixed(2)//(totalAfterDiscount + totalAfterDiscount * 18 / 100).toFixed(2)
+        totalAmountToBePaid: totalAfterDiscount//(totalAfterDiscount + totalAfterDiscount * 18 / 100).toFixed(2)
     }
 }
 

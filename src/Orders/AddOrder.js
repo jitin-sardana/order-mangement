@@ -136,6 +136,7 @@ const AddOrder = () => {
                         margin="normal"
                         InputProps={{
                             inputProps: {
+                                type:'number',
                                 min: 1,
                                 inputmode: "decimal"
                             }
