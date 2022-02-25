@@ -74,7 +74,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
          var whatsappMessage= "My title"+"\r\n\r\n"+"My description and link"
         return window.encodeURIComponent(whatsappMessage);
         */
-        const greetings = 'Greeting%20from%20H.C%20Agency%0A';
+        const greetings = 'Greeting%20from%20H. C%20Agencies%0A';
         let orderDetails = '%0A';
         for (let i = 0; i < orderItems.length; i++) {
             orderDetails += `${orderItems[i].productName}(${orderItems[i].productPrice}*${orderItems[i].quantity}${orderItems[i].unit})=${orderItems[i].total}%0A`
@@ -83,7 +83,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
         const discountedAmount = discount ? `%0ADiscount = ${discount}%0A` : `%0A`;
         const totalAfterDiscount = discount ? `Total = ${calculation?.totalAfterDiscount}%0A` : ``;
         //const gst = `State GST = 9% %0ACentral GST = 9% %0A`;
-        const totalAmountToBePaid = `Total Amount to be Paid = Rs. ${calculation?.totalAfterDiscount}%0A%0A`;
+        const totalAmountToBePaid = `Total Amount to be Paid = (indian rupee) ${calculation?.totalAfterDiscount}%0A%0A`;
         const thanks = 'Thanks for placing order with us.%0ATake Care '
 
         return `${greetings}${orderDetails}${totalAmount}${discountedAmount}${totalAfterDiscount}${totalAmountToBePaid}${thanks}`;

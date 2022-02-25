@@ -77,7 +77,7 @@ export default function TopBar() {
                         <MenuIcon fontSize={'large'} />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        HC Agency
+                        HC Agencies
                     </Typography>
                     {user?.displayName && <><Typography className={classes.hiddenXs}>Welcome, {user.displayName} </Typography> <Button className={classes.hiddenXs} color="inherit" onClick={() => logout(dispatch)}>
                         Logout
