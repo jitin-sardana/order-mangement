@@ -5,7 +5,7 @@ import { DeleteOutlined } from '@material-ui/icons';
 import { getCalculation } from '../utils';
 import { useDispatch } from 'react-redux';
 import { placeNewOrder } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     actionButtons: {
@@ -55,7 +55,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
     const dispatch = useDispatch();
     const [discount, setDiscount] = useState(0);
     const [calculation, updateCalculation] = useState();
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     useEffect(() => {
         updateCalculation(getCalculation(orderItems, discount));
@@ -91,10 +91,10 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
     }
     const placeOrder = () => {
         const { totalAfterDiscount, totalAmountToBePaid } = calculation;
-        const orderPlacedOn = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+        const orderPlacedOn = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' });
         const payload = { ...{ products: orderItems }, ...selectedClient, ...selectedCity, discount, totalAfterDiscount, totalAmountToBePaid, orderPlacedOn };
         placeNewOrder(payload, dispatch);
-        navigate('/orders');
+        //navigate('/orders');
     }
 
     return (<><Grid container xs={12} sm={12} md={8} lg={8} >

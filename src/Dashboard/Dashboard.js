@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography }  from '@material-ui/core';
-import { auth, loadProducts, loadOrders } from "../firebase";
+import { auth, loadProducts } from "../firebase";
 import AddNewCity from "./AddNewCity";
 import CityList from "./CityList";
 
@@ -59,7 +59,6 @@ function Dashboard() {
     if (loading) return;
     if (!user) return navigate("/");
     loadProducts(dispatch);
-    loadOrders(dispatch);
   }, [user, loading, navigate, dispatch]);
 
   return (

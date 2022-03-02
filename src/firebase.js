@@ -81,7 +81,7 @@ const addNewProduct = async (values, dispatch) => {
     try {
         const { productName, productPrice, unit } = values;
         await addDoc(collection(db, "products"), {
-            productName : capitalizeFirstLetter(productName),
+            productName: capitalizeFirstLetter(productName),
             productPrice,
             unit
         });
@@ -99,10 +99,10 @@ const placeNewOrder = async (values, dispatch) => {
     try {
         await addDoc(collection(db, "orders"), values);
         Swal.fire({
-             icon: 'success',
-             title: 'Order has been place successfully!'
-         });
-         loadOrders(dispatch);
+            icon: 'success',
+            title: 'Order has been place successfully!'
+        });
+        loadOrders(dispatch);
     } catch (e) {
         console.error("Error adding product: ", e);
     }
@@ -114,7 +114,7 @@ const editProductDetails = async (values, dispatch) => {
         const { productName, productPrice, id, unit } = values;
         const productRef = doc(db, "products", id);
         await updateDoc(productRef, {
-            productName : capitalizeFirstLetter(productName), productPrice, unit
+            productName: capitalizeFirstLetter(productName), productPrice, unit
         });
         loadProducts(dispatch);
         /* Swal.fire({
@@ -154,19 +154,18 @@ const deleteClient = async (id) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-        })
-            .then(async (response) => {
-                if (response) {
-                    const { isConfirmed } = response;
-                    if (isConfirmed) {
-                        deleteDoc(doc(db, "clients", id));
-                        /*  Swal.fire({
-                             icon: 'success',
-                             title: 'Client deleted successfully!'
-                         }); */
-                    }
+        }).then(async (response) => {
+            if (response) {
+                const { isConfirmed } = response;
+                if (isConfirmed) {
+                    deleteDoc(doc(db, "clients", id));
+                    /*  Swal.fire({
+                         icon: 'success',
+                         title: 'Client deleted successfully!'
+                     }); */
                 }
-            });
+            }
+        });
     } catch (e) {
         console.error("Error deleting client: ", e);
     }
@@ -239,9 +238,9 @@ const loadProducts = async (dispatch) => {
         dispatch({ type: 'LOADING', payload: false });
     });
 }
-const loadOrders = async (dispatch) => {
+const loadOrders = async (dispatch, ordersByDate) => {
     dispatch({ type: 'LOADING', payload: true });
-    db.collection('orders').onSnapshot(snap => {
+    db.collection('orders').where('orderPlacedOn', '==', ordersByDate).onSnapshot(snap => {
         let orders = [];
         snap.docs.forEach((doc) => {
             const data = doc.data();
@@ -262,25 +261,75 @@ const deleteProduct = async (id) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-        })
-            .then(async (response) => {
-                if (response) {
-                    const { isConfirmed } = response;
-                    if (isConfirmed) {
-                        await deleteDoc(doc(db, "products", id));
-                        /*  Swal.fire({
-                             icon: 'success',
-                             title: 'Product deleted successfully!'
-                         }); */
-                    }
+        }).then(async (response) => {
+            if (response) {
+                const { isConfirmed } = response;
+                if (isConfirmed) {
+                    await deleteDoc(doc(db, "products", id));
+                    /*  Swal.fire({
+                         icon: 'success',
+                         title: 'Product deleted successfully!'
+                     }); */
                 }
-            });
+            }
+        });
     } catch (e) {
         console.error("Error deleting client: ", e);
     }
-
 }
-
+const deleteSelectedOrder = async (id) => {
+    try {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this order!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(async (response) => {
+            if (response) {
+                const { isConfirmed } = response;
+                if (isConfirmed) {
+                    await deleteDoc(doc(db, "orders", id));
+                      Swal.fire({
+                         icon: 'success',
+                         title: 'Order deleted successfully!'
+                     }); 
+                }
+            }
+        });
+    } catch (e) {
+        console.error("Error deleting client: ", e);
+    }
+}
+const deleteAllOrders = async (ordersByDate) => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: `Once deleted, you will not be able to recover all records place on ${ordersByDate} !`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then(async (response) => {
+        if (response) {
+            const { isConfirmed } = response;
+            if (isConfirmed) {
+                const emptyMessages = await db.collection('orders').where('orderPlacedOn', '==', ordersByDate).get()
+                const batch = db.batch();
+                emptyMessages.forEach(doc => {
+                    batch.delete(doc.ref);
+                });
+                await batch.commit();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'All orders deleted successfully!'
+                });
+            }
+        }
+    });
+}
 export {
     auth,
     db,
@@ -298,5 +347,7 @@ export {
     deleteProduct,
     loadProducts,
     loadOrders,
-    placeNewOrder
+    placeNewOrder,
+    deleteSelectedOrder,
+    deleteAllOrders
 };
