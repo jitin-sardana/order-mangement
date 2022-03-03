@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         width: '50%',
         display: 'inherit',
-        marginLeft:'25%',
+        marginLeft: '25%',
         marginTop: '5%',
         textAlign: 'center'
     },
@@ -38,13 +38,13 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         width: '50%',
         display: 'inherit',
-        marginLeft:'25%',
+        marginLeft: '25%',
         marginTop: '5%',
         textAlign: 'center',
         [theme.breakpoints.up('lg')]: {
-            display:'none',
+            display: 'none',
             '@media (orientation: portrait)': {
-                display:'none'
+                display: 'none'
             }
         }
     }
@@ -55,6 +55,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
     const dispatch = useDispatch();
     const [discount, setDiscount] = useState(0);
     const [calculation, updateCalculation] = useState();
+    const [disablePlaceOrderButton, setDisablePlaceOrderButton] = useState(false);
     //const navigate = useNavigate();
 
     useEffect(() => {
@@ -70,36 +71,31 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
     }
 
     const getMessageDetails = () => {
-        /*
-         var whatsappMessage= "My title"+"\r\n\r\n"+"My description and link"
-        return window.encodeURIComponent(whatsappMessage);
-        */
         const greetings = 'Greeting%20from%20H. C%20Agencies%0A';
         let orderDetails = '%0A';
         for (let i = 0; i < orderItems.length; i++) {
             orderDetails += `${orderItems[i].productName}(${orderItems[i].productPrice}*${orderItems[i].quantity}${orderItems[i].unit})=${orderItems[i].total}%0A`
         }
-        const totalAmount = discount ? `%0ATotal = ${calculation?.totalAmount}%0A` :``;
+        const totalAmount = discount ? `%0ATotal = ${calculation?.totalAmount}%0A` : ``;
         const discountedAmount = discount ? `%0ADiscount = ${discount}%0A` : `%0A`;
         const totalAfterDiscount = discount ? `Total = ${calculation?.totalAfterDiscount}%0A` : ``;
-        //const gst = `State GST = 9% %0ACentral GST = 9% %0A`;
         const totalAmountToBePaid = `Total Amount to be Paid = (indian rupee) ${calculation?.totalAfterDiscount}%0A%0A`;
         const thanks = 'Thanks for placing order with us.%0ATake Care '
 
         return `${greetings}${orderDetails}${totalAmount}${discountedAmount}${totalAfterDiscount}${totalAmountToBePaid}${thanks}`;
-
     }
-    const placeOrder = () => {
+    const placeOrder = async () => {
         const { totalAfterDiscount, totalAmountToBePaid } = calculation;
         const orderPlacedOn = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' });
         const payload = { ...{ products: orderItems }, ...selectedClient, ...selectedCity, discount, totalAfterDiscount, totalAmountToBePaid, orderPlacedOn };
-        placeNewOrder(payload, dispatch);
-        //navigate('/orders');
+        setDisablePlaceOrderButton(true);
+        await placeNewOrder(payload, dispatch);
+        setDisablePlaceOrderButton(false);
     }
 
     return (<><Grid container xs={12} sm={12} md={8} lg={8} >
         <Grid item xs={12} sm={12} >
-            <Typography variant="h6" style={{marginLeft:'15px'}}>Aggregate Bill</Typography><br />
+            <Typography variant="h6" style={{ marginLeft: '15px' }}>Aggregate Bill</Typography><br />
             <div className="myWebApp">
                 <table>
                     <tr>
@@ -130,14 +126,6 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
                     <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Discount(&#8377;)</strong></td>
                         <td colSpan='2' style={{ textAlign: 'Left' }}><input type='text' name='discount' autoComplete='off' style={{ width: '50px' }} defaultvalue={discount} onChange={addDiscount} /></td></tr>
 
-                    {/* <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Taxable Total</strong></td>
-                        <td colSpan='2' style={{ textAlign: 'Left' }}><strong>{calculation?.totalAfterDiscount}</strong></td></tr>
- */}
-                    {/* <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>State Tax</strong></td>
-                        <td colSpan='2' style={{ textAlign: 'Left' }}><strong>9%</strong></td></tr>
-                    <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Central Tax</strong></td>
-                        <td colSpan='2' style={{ textAlign: 'Left' }}><strong>9%</strong></td></tr>
- */}
                     <tr style={{ backgroundColor: 'white' }}><td colSpan='5' style={{ textAlign: 'Right' }}><strong>Total</strong></td>
                         <td colSpan='2' style={{ textAlign: 'Left' }}><strong>{calculation?.totalAmountToBePaid}</strong></td></tr>
                 </table>
@@ -153,7 +141,11 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
             <a target='_blank' rel="noreferrer" href={`tel:+91${selectedClient?.clientPhoneNo}`} className={classes.linkButton}><i className="fa fa-phone"></i> Call </a>
         </Grid>
         <Grid item xs={12} sm={12} lg={12} className={classes.placeOrder}>
-            <Button variant="contained" color="primary" onClick={placeOrder}>Place Order</Button>
+            <Button variant="contained" color="primary"
+                disabled={disablePlaceOrderButton}
+                onClick={placeOrder}>
+                {disablePlaceOrderButton ? <><i class="fa fa-refresh fa-spin"></i>&nbsp;Placing Order</> : "Place Order"}
+            </Button>
         </Grid>
     </Grid>
 

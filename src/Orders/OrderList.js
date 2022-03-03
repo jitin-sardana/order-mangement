@@ -143,7 +143,7 @@ const OrderList = () => {
                     {({ toPdf }) => <Button variant="contained" onClick={toPdf}>Download</Button>}
                 </Pdf>
             </Grid>}
-            <Grid item xs={12} className={classes.desktop}>
+            <Grid container item xs={12} className={classes.desktop}>
                 {orders?.length > 0 ? <div className="myWebApp" ref={pdfRef} style={{ width: 800 }} x={.5} y={.5} scale={0.5}>
                     <Grid item xs={12}>
                         <h2>Orders placed on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' })}</h2>
@@ -183,7 +183,7 @@ const OrderList = () => {
                                 </tr>
                             ))}
                         </tbody>
-                    </table></div> : <Grid className={classes.desktop} item xs={6} sm={12}>
+                    </table></div> : <Grid className={classes.desktop} item xs={12} sm={12}>
                     {stateLoader ? <img src={Loading} alt='loading data' /> : `No Order is placed so far`}
                 </Grid>
                 }
@@ -211,7 +211,7 @@ const OrderList = () => {
                         </CardContent>
                     </Card>
                 </>))}
-            </Grid> : <Grid className={classes.mobile} item xs={6}>
+            </Grid> : <Grid className={classes.mobile} item xs={12}>
                 {stateLoader ? <img src={Loading} alt='loading data' /> : `No Order is placed so far`}
             </Grid>}
         </Grid>

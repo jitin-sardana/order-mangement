@@ -103,6 +103,7 @@ const placeNewOrder = async (values, dispatch) => {
             title: 'Order has been place successfully!'
         });
         loadOrders(dispatch);
+        return true;
     } catch (e) {
         console.error("Error adding product: ", e);
     }
@@ -292,10 +293,10 @@ const deleteSelectedOrder = async (id) => {
                 const { isConfirmed } = response;
                 if (isConfirmed) {
                     await deleteDoc(doc(db, "orders", id));
-                      Swal.fire({
-                         icon: 'success',
-                         title: 'Order deleted successfully!'
-                     }); 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order deleted successfully!'
+                    });
                 }
             }
         });
