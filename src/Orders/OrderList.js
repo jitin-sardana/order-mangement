@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, createRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Grid, CardHeader, CardContent, Typography, Card, Button } from '@material-ui/core';
+import { Grid, CardContent, Typography, Card, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Pdf from "react-to-pdf";
 import { auth, loadOrders, deleteAllOrders, deleteSelectedOrder } from '../firebase';
@@ -194,20 +194,16 @@ const OrderList = () => {
                 </Grid>
                 {orders?.map((orderItem, i) => (<>
                     <Card className={classes.root}>
-                        <CardHeader
-                            title={orderItem.clientName}
-                            className={classes.cardHeader}
-                        />
                         <CardContent>
-                            <p><strong>Order Details:</strong></p>
-                            {orderItem.products.map((product) => (<>
-                                <Typography variant="body1" component="p">
-                                    {product.productName}({product.productPrice}*{product.quantity}/{product.unit} = {product.total})
-                                </Typography>
-                            </>))}
-                            <p><Typography variant="body2" component="p"><strong>Discount: </strong> {orderItem.discount}</Typography>
-                                <Typography variant="body3" component="p"><strong>Total: (&#8377;) </strong>{orderItem.totalAmountToBePaid}</Typography></p>
-                            <p><Button variant="contained" onClick={() => deleteSelectedOrder(orderItem.id)}>Delete</Button></p>
+                            <Typography variant="body2" component="p"><strong>Client Name: </strong> {orderItem.clientName}</Typography><br />
+                            <Typography variant="body2" component="p"><strong>Order Details: </strong></Typography>
+                            <table border={1} style={{ textAlign: 'left' }}><tr><th>Product</th><th>Quantity</th><th>Unit</th><th>Price(&#8377;)</th></tr>
+                                {orderItem.products.map((product) => (<>
+                                    <tr><td>{product.productName}</td><td>{product.quantity}</td><td>{product.unit}</td><td>{product.total}</td></tr>
+                                </>))}</table><br />
+                            <Typography variant="body2" component="p"><strong>Discount: </strong> {orderItem.discount}</Typography>
+                            <Typography variant="body3" component="p"><strong>Total: (&#8377;) </strong>{orderItem.totalAmountToBePaid}</Typography><br />
+                            <Button variant="contained" onClick={() => deleteSelectedOrder(orderItem.id)}>Delete</Button>
                         </CardContent>
                     </Card>
                 </>))}
