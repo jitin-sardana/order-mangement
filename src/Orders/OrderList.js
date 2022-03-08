@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         backgroundColor: '#cccdee',
-        marginTop: '15px',
+        marginTop: '25px',
         background: "linear-gradient(45deg, #cccdee 30%, #3f51b5 70%)",
         transition: "0.3s",
         boxShadow: "0 15px 40px -12px rgba(3,3,0,0.3)",
@@ -148,6 +148,9 @@ const OrderList = () => {
                     <Grid item xs={12}>
                         <h2>Orders placed on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' })}</h2>
                     </Grid>
+                    <Grid item xs={12}>
+                        <h5>Total Orders: {orders.length}</h5>
+                    </Grid>
                     <table>
                         <thead>
                             <tr>
@@ -192,14 +195,30 @@ const OrderList = () => {
                 <Grid item xs={12}>
                     <h2>Orders placed on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' })}</h2>
                 </Grid>
+                <Grid item xs={12}>
+                    <h5>Total Orders: {orders.length}</h5>
+                </Grid>
                 {orders?.map((orderItem, i) => (<>
                     <Card className={classes.root}>
                         <CardContent>
-                            <Typography variant="body2" component="p"><strong>Client Name: </strong> {orderItem.clientName}</Typography><br />
+                            <Typography variant="body2" component="p"><strong>Client Name: </strong> {orderItem.clientName}</Typography>
+                            <Typography variant="body2" component="p"><strong>Location: </strong> {orderItem.cityName}</Typography><br />
                             <Typography variant="body2" component="p"><strong>Order Details: </strong></Typography>
-                            <table border={1} style={{ textAlign: 'left' }}><tr><th>Product</th><th>Quantity</th><th>Unit</th><th>Price(&#8377;)</th></tr>
+                            <table border={1} style={{ textAlign: 'left' }}>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price(&#8377;)</th>
+                                    <th>Quantity</th>
+                                    <th>Unit</th>
+                                    <th>Total</th>
+                                </tr>
                                 {orderItem.products.map((product) => (<>
-                                    <tr><td>{product.productName}</td><td>{product.quantity}</td><td>{product.unit}</td><td>{product.total}</td></tr>
+                                    <tr>
+                                        <td>{product.productName}</td>
+                                        <td>{(product?.priceAfterDiscountPerUnit) ? <><strike style={{ color: 'red' }}>{product.productPrice}</strike><br />{product.priceAfterDiscountPerUnit}</> : product.total}</td>
+                                        <td>{product.quantity}</td>
+                                        <td>{product.unit}</td>
+                                        <td>{product?.totalAfterUnitsDiscount ? product.totalAfterUnitsDiscount : product.total}</td></tr>
                                 </>))}</table><br />
                             <Typography variant="body2" component="p"><strong>Discount: </strong> {orderItem.discount}</Typography>
                             <Typography variant="body3" component="p"><strong>Total: (&#8377;) </strong>{orderItem.totalAmountToBePaid}</Typography><br />

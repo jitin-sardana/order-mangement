@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 export const getTotalWithoutGst = (items) => {
     let totalPrice = 0;
     for (let i = 0; i < items.length; i++) {
-        totalPrice += items[i].total;
+        totalPrice += items[i].total || items[i].totalAfterUnitsDiscount;
     }
     return totalPrice;
 }

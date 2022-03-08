@@ -56,6 +56,7 @@ const AddOrder = () => {
     const [user, loading] = useAuthState(auth);
     const dispatch = useDispatch();
     const quantityReference = useRef(null);
+    const discountReference = useRef(null);
     const { selectedClient, products, orderDetails, selectedCity } = useSelector(state => state.orderManagement);
     const [selectedProduct, setSelectedProduct] = useState('');
     const [updatedSeletedProduct, setUpdatedSelectedProduct] = useState([]);
@@ -68,9 +69,16 @@ const AddOrder = () => {
     const onProductChange = (event) => {
         setSelectedProduct(event.target.value);
     }
+
+    const updateUnitsDiscount = (event) => {
+        const totalPriceAfterDiscountPerUnit = selectedProduct.productPrice - event.target.value;
+        const product = { ...selectedProduct, quantity: quantityReference.current.value, discountPerUnit: event.target.value, priceAfterDiscountPerUnit : totalPriceAfterDiscountPerUnit, totalAfterUnitsDiscount: totalPriceAfterDiscountPerUnit * quantityReference.current.value };
+        setUpdatedSelectedProduct(product); 
+    }
     const updateQuantity = (event) => {
         const product = { ...selectedProduct, quantity: quantityReference.current.value, total: selectedProduct.productPrice * event.target.value };
         setUpdatedSelectedProduct(product);
+        console.log('From Discount',selectedProduct);
     }
 
     const aggregateOrder = () => {
@@ -82,6 +90,7 @@ const AddOrder = () => {
         }
         setSelectedProduct('');
         quantityReference.current.value = '';
+        discountReference.current.value = '';
     }
     return (<>
         <Grid container spacing={2} className={classes.container}>
@@ -143,6 +152,21 @@ const AddOrder = () => {
                         }}
                         inputRef={quantityReference}
                         onBlur={updateQuantity}
+                    />
+                    <TextField
+                        label="Discount/Box"
+                        type="number"
+                        variant="outlined"
+                        autoComplete="off"
+                        margin="normal"
+                        InputProps={{
+                            inputProps: {
+                                type:'number',
+                                inputmode: "decimal"
+                            }
+                        }}
+                        inputRef={discountReference}
+                        onBlur={updateUnitsDiscount}
                     />
                     <Button variant="contained" disabled={!selectedProduct} color="primary" onClick={aggregateOrder}>
                         Add to order

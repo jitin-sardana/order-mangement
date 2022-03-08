@@ -70,7 +70,26 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
         setDiscount(event.target.value)
     }
 
+    const orderMessageString = (item) => {
+        return (item?.priceAfterDiscountPerUnit) ? `${item.productName}(~${item.productPrice}~ %20${item.priceAfterDiscountPerUnit}*${item.quantity}${item.unit})=${item.totalAfterUnitsDiscount}%0A` 
+        : `${item.productName}(${item.productPrice}*${item.quantity}${item.unit})=${item.total}%0A`;
+    }
     const getMessageDetails = () => {
+        const greetings = 'Greeting%20from%20H. C%20Agencies%0A';
+        let orderDetails = '%0A';
+        for (let i = 0; i < orderItems.length; i++) {
+            orderDetails += orderMessageString(orderItems[i]);
+        }
+        const totalAmount = discount ? `%0ATotal = ${calculation?.totalAmount}%0A` : ``;
+        const discountedAmount = discount ? `%0ADiscount = ${discount}%0A` : `%0A`;
+        const totalAfterDiscount = discount ? `Total = ${calculation?.totalAfterDiscount}%0A` : ``;
+        const totalAmountToBePaid = `Total Amount to be Paid = (indian rupee) ${calculation?.totalAfterDiscount}%0A%0A`;
+        const thanks = 'Thanks for placing order with us.%0ATake Care '
+
+        return `${greetings}${orderDetails}${totalAmount}${discountedAmount}${totalAfterDiscount}${totalAmountToBePaid}${thanks}`;
+    }
+
+    /* const getMessageDetailsOld = () => {
         const greetings = 'Greeting%20from%20H. C%20Agencies%0A';
         let orderDetails = '%0A';
         for (let i = 0; i < orderItems.length; i++) {
@@ -83,7 +102,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
         const thanks = 'Thanks for placing order with us.%0ATake Care '
 
         return `${greetings}${orderDetails}${totalAmount}${discountedAmount}${totalAfterDiscount}${totalAmountToBePaid}${thanks}`;
-    }
+    } */
     const placeOrder = async () => {
         const { totalAfterDiscount, totalAmountToBePaid } = calculation;
         const orderPlacedOn = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' });
@@ -103,7 +122,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
                         <th>Product Name</th>
                         <th>Unit</th>
                         <th>Price(&#8377;)</th>
-                        <th>Quantity</th>
+                        <th>Qty</th>
                         <th>Total</th>
                         <th>Actions</th>
                     </tr>
@@ -112,9 +131,9 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
                             <td>{i + 1}</td>
                             <td>{order.productName}</td>
                             <td>{order.unit}</td>
-                            <td>{order.productPrice}</td>
+                            <td>{order?.priceAfterDiscountPerUnit ? <><strike style={{color:'red'}}>{order.productPrice}</strike><br/>{order.priceAfterDiscountPerUnit}</> : order.productPrice}</td>
                             <td>{order.quantity}</td>
-                            <td>{order.productPrice * order.quantity}</td>
+                            <td>{order.totalAfterUnitsDiscount > 0 ? order.totalAfterUnitsDiscount : order.productPrice * order.quantity }</td>
                             <td>
                                 <Button variant="outlined" className={classes.actionButtons} onClick={() => deleteItemFromOrder(order.id)} startIcon={<DeleteOutlined />}></Button>
                             </td>
@@ -131,21 +150,24 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
                 </table>
             </div>
         </Grid>
-        <Grid item xs={12} className={classes.placeOrder} >
+        <Grid container >
+        <Grid item xs={12} sm={12} md={3} lg={3} className={classes.placeOrder} >
             <a variant={'button'} target='_blank' rel="noreferrer" href={`https://api.whatsapp.com/send/?phone=91${selectedClient?.clientPhoneNo}&text=${getMessageDetails()}`} className={classes.linkButtonWatsApp}><i className="fa fa-whatsapp"></i> Send Watsapp</a>
         </Grid>
-        <Grid item xs={12} className={classes.placeOrder} >
+        <Grid item xs={12} sm={12} md={3} lg={1}  className={classes.placeOrder} >
             <a target='_blank' rel="noreferrer" href={`sms:+91${selectedClient?.clientPhoneNo};?&body=${getMessageDetails()}`} className={classes.linkButton}><i className="fa fa-envelope"></i> Sms </a>
         </Grid>
-        <Grid item xs={12} className={classes.placeOrder}>
+        <Grid item xs={12} sm={12} md={3} lg={1}  className={classes.placeOrder}>
             <a target='_blank' rel="noreferrer" href={`tel:+91${selectedClient?.clientPhoneNo}`} className={classes.linkButton}><i className="fa fa-phone"></i> Call </a>
         </Grid>
-        <Grid item xs={12} sm={12} lg={12} className={classes.placeOrder}>
+         <Grid item xs={12} sm={12} md={3} lg={3} className={classes.placeOrder}
+         style={{marginBottom:'30px', marginTop:'30px',width:'60%'}}>
             <Button variant="contained" color="primary"
                 disabled={disablePlaceOrderButton}
                 onClick={placeOrder}>
                 {disablePlaceOrderButton ? <><i class="fa fa-refresh fa-spin"></i>&nbsp;Placing Order</> : "Place Order"}
             </Button>
+        </Grid>
         </Grid>
     </Grid>
 
