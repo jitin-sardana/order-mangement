@@ -83,7 +83,7 @@ const OrderDetails = ({ orderItems, selectedClient, selectedCity }) => {
         const totalAmount = discount ? `%0ATotal = ${calculation?.totalAmount}%0A` : ``;
         const discountedAmount = discount ? `%0ADiscount = ${discount}%0A` : `%0A`;
         const totalAfterDiscount = discount ? `Total = ${calculation?.totalAfterDiscount}%0A` : ``;
-        const totalAmountToBePaid = `Total Amount to be Paid = (indian rupee) ${calculation?.totalAfterDiscount}%0A%0A`;
+        const totalAmountToBePaid = `Total Amount to be Paid = ₹ *${calculation?.totalAfterDiscount}* %0A%0A`;
         const thanks = 'Thanks for placing order with us.%0ATake Care '
 
         return `${greetings}${orderDetails}${totalAmount}${discountedAmount}${totalAfterDiscount}${totalAmountToBePaid}${thanks}`;

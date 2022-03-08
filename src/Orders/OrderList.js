@@ -215,7 +215,7 @@ const OrderList = () => {
                                 {orderItem.products.map((product) => (<>
                                     <tr>
                                         <td>{product.productName}</td>
-                                        <td>{(product?.priceAfterDiscountPerUnit) ? <><strike style={{ color: 'red' }}>{product.productPrice}</strike><br />{product.priceAfterDiscountPerUnit}</> : product.total}</td>
+                                        <td>{(product?.priceAfterDiscountPerUnit) ? <><strike style={{ color: 'red' }}>{product.productPrice}</strike><br />{product.priceAfterDiscountPerUnit}</> : product.productPrice}</td>
                                         <td>{product.quantity}</td>
                                         <td>{product.unit}</td>
                                         <td>{product?.totalAfterUnitsDiscount ? product.totalAfterUnitsDiscount : product.total}</td></tr>
