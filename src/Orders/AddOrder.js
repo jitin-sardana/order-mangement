@@ -71,21 +71,22 @@ const AddOrder = () => {
     }
 
     const updateUnitsDiscount = (event) => {
-        const totalPriceAfterDiscountPerUnit = selectedProduct.productPrice - event.target.value;
-        const product = { ...selectedProduct, quantity: quantityReference.current.value, discountPerUnit: event.target.value, priceAfterDiscountPerUnit : totalPriceAfterDiscountPerUnit, totalAfterUnitsDiscount: totalPriceAfterDiscountPerUnit * quantityReference.current.value };
-        setUpdatedSelectedProduct(product); 
+        if (event.target.value) {
+            const totalPriceAfterDiscountPerUnit = selectedProduct.productPrice - event.target.value;
+            const product = { ...selectedProduct, quantity: quantityReference.current.value, discountPerUnit: event.target.value, priceAfterDiscountPerUnit: totalPriceAfterDiscountPerUnit, totalAfterUnitsDiscount: totalPriceAfterDiscountPerUnit * quantityReference.current.value };
+            setUpdatedSelectedProduct(product);
+        }
     }
     const updateQuantity = (event) => {
         const product = { ...selectedProduct, quantity: quantityReference.current.value, total: selectedProduct.productPrice * event.target.value };
         setUpdatedSelectedProduct(product);
-        console.log('From Discount',selectedProduct);
     }
 
     const aggregateOrder = () => {
         const productAlreadyExist = isProductExist(selectedProduct, orderDetails);
-        if(productAlreadyExist){
+        if (productAlreadyExist) {
             AlertBox('warning', 'Product already exist in current order');
-        }else if (updatedSeletedProduct?.quantity > 0 && !productAlreadyExist) {
+        } else if (updatedSeletedProduct?.quantity > 0 && !productAlreadyExist) {
             dispatch({ type: 'UPDATE_ORDER_DETAILS', payload: updatedSeletedProduct });
         }
         setSelectedProduct('');
@@ -145,7 +146,7 @@ const AddOrder = () => {
                         margin="normal"
                         InputProps={{
                             inputProps: {
-                                type:'number',
+                                type: 'number',
                                 min: 1,
                                 inputmode: "decimal"
                             }
@@ -161,7 +162,7 @@ const AddOrder = () => {
                         margin="normal"
                         InputProps={{
                             inputProps: {
-                                type:'number',
+                                type: 'number',
                                 inputmode: "decimal"
                             }
                         }}
