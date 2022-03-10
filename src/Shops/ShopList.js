@@ -7,6 +7,7 @@ import { Grid, CardHeader, CardContent, Typography, Card, IconButton, Menu, Menu
 import { makeStyles } from '@material-ui/core/styles';
 import Loading from '../assets/loading.gif';
 import { useNavigate } from 'react-router-dom';
+import Search from '../CommonComponents/Search';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,6 +47,7 @@ const ShopList = ({ cityName, docId }) => {
     const [clients, setClients] = useState(null);
     const [selectedClient, setSelectedClient] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [searchItem, setSearchItem] = useState('');
     const navigate = useNavigate()
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -96,9 +98,13 @@ const ShopList = ({ cityName, docId }) => {
     const closeEditModal = () => {
         setIsOpen(false);
     }
+    const updateData = (e) => {
+        setSearchItem(e.target.value);
+    }
 
     return (<>
-        {clients?.length > 0 ? clients.map((client) => (<React.Fragment key={client.id}>
+        {clients?.length > 0 && <Search updateData={updateData} cityName={cityName} />}
+        {clients?.length > 0 ? clients.filter((client)=>client.clientName.toLowerCase().indexOf(searchItem)!==-1).map((client) => (<React.Fragment key={client.id}>
             <Grid item xs={12} sm={6} md={6} lg={4}>
                 <Card className={classes.root}>
                     <CardHeader
