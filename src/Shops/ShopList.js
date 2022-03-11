@@ -104,7 +104,7 @@ const ShopList = ({ cityName, docId }) => {
 
     return (<>
         {clients?.length > 0 && <Search updateData={updateData} cityName={cityName} />}
-        {clients?.length > 0 ? clients.filter((client)=>client.clientName.toLowerCase().indexOf(searchItem)!==-1).map((client) => (<React.Fragment key={client.id}>
+        {clients?.length > 0 ? clients.filter((client)=>client.clientName.toLowerCase().indexOf(searchItem.toLowerCase())!==-1).map((client) => (<React.Fragment key={client.id}>
             <Grid item xs={12} sm={6} md={6} lg={4}>
                 <Card className={classes.root}>
                     <CardHeader
